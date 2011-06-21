@@ -1,6 +1,7 @@
 package com.watashiwa.catjong;
 
 import java.io.IOException;
+import java.util.Random;
 
 import javax.microedition.khronos.opengles.GL10;
 
@@ -8,12 +9,14 @@ import javax.microedition.khronos.opengles.GL10;
 
 import org.anddev.andengine.engine.Engine;
 import org.anddev.andengine.entity.scene.Scene;
+import org.anddev.andengine.entity.sprite.Sprite;
 import org.anddev.andengine.entity.text.ChangeableText;
 import org.anddev.andengine.input.touch.TouchEvent;
 import org.anddev.andengine.opengl.font.Font;
 import org.anddev.andengine.opengl.font.FontFactory;
 import org.anddev.andengine.opengl.texture.Texture;
 import org.anddev.andengine.opengl.texture.TextureOptions;
+import org.anddev.andengine.opengl.texture.region.TextureRegion;
 import org.anddev.andengine.opengl.texture.region.TextureRegionFactory;
 import org.anddev.andengine.opengl.texture.region.TiledTextureRegion;
 
@@ -25,9 +28,11 @@ public class GameScene extends Scene {
 
 
 	
-	private TiledTextureRegion regionPieces[] = {null, null, null, null};
+	private TiledTextureRegion regionPieces[] = {null, null, null, null, null, null};
 	
 	private Texture mFontTexture;
+	
+	private TextureRegion bgImage;
     private Font mFont;
 	
   /*  private int initBoard [][] = 
@@ -97,14 +102,29 @@ public class GameScene extends Scene {
         engine.getFontManager().loadFont(mFont);
 		
         final Texture texturePiece0 = new Texture(64, 128, TextureOptions.BILINEAR);
-        regionPieces[0] = TextureRegionFactory.createTiledFromAsset(texturePiece0, context, "piece1.png", 0, 0, 1, 1);
+        regionPieces[0] = TextureRegionFactory.createTiledFromAsset(texturePiece0, context, "piece0.png", 0, 0, 1, 1);
         
-        engine.getTextureManager().loadTextures(texturePiece0);
-		
+        final Texture texturePiece1 = new Texture(64, 128, TextureOptions.BILINEAR);
+        regionPieces[1] = TextureRegionFactory.createTiledFromAsset(texturePiece1, context, "piece1.png", 0, 0, 1, 1);
+        
+        final Texture texturePiece2 = new Texture(64, 128, TextureOptions.BILINEAR);
+        regionPieces[2] = TextureRegionFactory.createTiledFromAsset(texturePiece2, context, "piece2.png", 0, 0, 1, 1);
+        
+        final Texture texturePiece3 = new Texture(64, 128, TextureOptions.BILINEAR);
+        regionPieces[3] = TextureRegionFactory.createTiledFromAsset(texturePiece3, context, "piece3.png", 0, 0, 1, 1);
+        
+        final Texture texturePiece4 = new Texture(64, 128, TextureOptions.BILINEAR);
+        regionPieces[4] = TextureRegionFactory.createTiledFromAsset(texturePiece4, context, "piece4.png", 0, 0, 1, 1);
+        
+        final Texture texturePiece5 = new Texture(64, 128, TextureOptions.BILINEAR);
+        regionPieces[5] = TextureRegionFactory.createTiledFromAsset(texturePiece5, context, "piece5.png", 0, 0, 1, 1);
+        
 		// BG
-		/*final Texture mBackgroundTexture = new Texture(512, 1024, TextureOptions.BILINEAR);
-		bgImage = TextureRegionFactory.createFromAsset(mBackgroundTexture, context, "bg_test1.png", 0, 0);
-	 */
+		final Texture mBackgroundTexture = new Texture(512, 1024, TextureOptions.BILINEAR);
+		bgImage = TextureRegionFactory.createFromAsset(mBackgroundTexture, context, "decors.png", 0, 0);
+	 
+		engine.getTextureManager().loadTextures(mBackgroundTexture, texturePiece0, texturePiece1, texturePiece2, texturePiece3, texturePiece4, texturePiece5);
+			
 		// on ajoute toutes les textures
 	//	engine.getTextureManager().loadTextures(mBackgroundTexture /*, textureDroid0, textureDroid1, textureDroid2, textureDroid3 */);
 		
@@ -155,6 +175,9 @@ public class GameScene extends Scene {
 	{
 		//int m = 0;
 		Piece piece1 = null;
+		Random randomGenerator = new Random();
+		
+		int type = 0;
 		
 	//	myFinalBoard = new ArrayList<Piece[][]>();
 		 
@@ -168,7 +191,8 @@ public class GameScene extends Scene {
 				//mBoard[i] =  new Piece [initBoard[i].length];
 				for(int m = initBoard[i][j]; m > 0 ; m--)
 				{
-					piece1 = new Piece (regionPieces[0], i, j, m, 0);
+					type = randomGenerator.nextInt(6);
+					piece1 = new Piece (regionPieces[type], i, j, m, type);
 					mBoard[m][i][j] = piece1;
 					
 				    this.getChild(LAYER_PIECES + m).attachChild(piece1);
@@ -185,22 +209,18 @@ public class GameScene extends Scene {
 	private void init ()
 	{	
 		// Creation du BG
-		/*final Sprite myBackground = new Sprite(0, 0, 480, 800, bgImage);
-		 this.getChild(LAYER_BACKGROUND).attachChild(myBackground);
-		*/
+		final Sprite myBackground = new Sprite(0, 0, 480, 800, bgImage);
+		this.getChild(LAYER_BACKGROUND).attachChild(myBackground);
+		
        
         /* Le score */
-        this.mScoreText = new ChangeableText(Constants.CAMERA_WIDTH/2, 5, mFont, "Score: 0", "Score: XXXX".length());
+        this.mScoreText = new ChangeableText(Constants.CAMERA_WIDTH/2 + 50, 15, mFont, "Score: 0", "Score: XXXX".length());
         this.mScoreText.setBlendFunction(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA);
         //this.mScoreText.setAlpha(0.5f);
-        this.mScoreText.setColor(0.1f, 0.1f, 0.9f);
+        this.mScoreText.setColor(1.0f, 1.0f, 1.0f);
         this.getChild(LAYER_SCORE).attachChild(mScoreText);
   
-        
         buildBoard();
-    
-       
-        
 	}
 	
 
@@ -210,7 +230,7 @@ public class GameScene extends Scene {
 	 {
 		boolean ret = super.onSceneTouchEvent(pSceneTouchEvent);
 		
-		
+		this.mScoreText.setText("Score: " + this.gameScore);
 		
 		 
 		return ret;

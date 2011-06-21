@@ -16,6 +16,6 @@ public class Constants {
 	 
 	 public static final int MARGE_LEFT = 25;
 	 public static final int MARGE_UP = 100;
-	 public static final int PIECE_UP = 12;
+	 public static final int PIECE_UP = 10;
 }
 

@@ -13,6 +13,9 @@ public class Piece extends AnimatedSprite {
 	public int j = 0;
 	public int m = 0;
 	
+	private float destX = 0;
+	private float destY = 0;
+	
 	private boolean isSelected = false;
 	public boolean isAlive = true;
 	
@@ -21,6 +24,7 @@ public class Piece extends AnimatedSprite {
 	public Piece(float pX, float pY, TiledTextureRegion pTiledTextureRegion)
 	{
 			super(pX, pY, pTiledTextureRegion);
+			
 			this.mPhysicsHandler = new PhysicsHandler(this);
 			this.registerUpdateHandler(this.mPhysicsHandler);
 	}
@@ -34,13 +38,37 @@ public class Piece extends AnimatedSprite {
 			this.m = pm;
 			this.type = ptype;
 					
-			this.mX = j*this.mWidth + Constants.MARGE_LEFT;
-			this.mY = i*(this.mHeight - Constants.PIECE_UP) - m*Constants.PIECE_UP + Constants.MARGE_UP;
+			destX = j*this.mWidth + Constants.MARGE_LEFT;
+			destY = i*(this.mHeight - Constants.PIECE_UP) - m*Constants.PIECE_UP + Constants.MARGE_UP;
+			
+			this.mX = 0;
+			this.mY = 0;
+			
+			// todo faire une fonction d'affichage du bas vers le haut
+			this.mX = destX;
+			this.mY = destY;
 			
 			this.mPhysicsHandler = new PhysicsHandler(this);
 			this.registerUpdateHandler(this.mPhysicsHandler);
 	}
 	
+	
+	public void deSelectMe()
+	{
+		if (isSelected)
+		{
+			isSelected = false;
+			this.setScale(1.00f);
+			GameScene.selectedPiece = null;
+		}
+	}
+	
+	private void selectMe()
+	{
+		isSelected = true;
+	 	GameScene.selectedPiece = this;
+    	this.setScale(1.25f);
+	}
 	
 	 public boolean onAreaTouched(final TouchEvent pSceneTouchEvent, final float pTouchAreaLocalX, final float pTouchAreaLocalY) 
 	 {
@@ -49,29 +77,43 @@ public class Piece extends AnimatedSprite {
 	         case TouchEvent.ACTION_DOWN:
 	        	 if (GameScene.canSelectPiece(this))
 	        	 {
+	        		 
 		        	 if (!this.isSelected )
 		             {
-		        		// verif que les piece sont du meme type
-	        			 if(GameScene.selectedPiece != null && GameScene.selectedPiece.type == this.type)
-	        			 {
-	        				 GameScene.removePiece(GameScene.selectedPiece);
-	        				 GameScene.removePiece(this);
-	        				 GameScene.selectedPiece = null;
-	        			 }
-	        			 else
-		        		 // Pas de piece deja selectionnée ou pas du bon type
+		        		 if(GameScene.selectedPiece != null )
 		        		 {
-		        		 	// todo si piece deja pas selectionné sinon check que le type est idendique.
-		        		 	isSelected = true;
-		        		 	GameScene.selectedPiece = this;
-		                	this.setScale(1.25f);
-		        		 }		 
+		        			// verif que les piece sont du meme type
+		        			 if (GameScene.selectedPiece.type == this.type)
+		        			 {
+		        				 GameScene.removePiece(GameScene.selectedPiece);
+		        				 GameScene.removePiece(this);
+		        				 GameScene.selectedPiece = null;
+		        				 GameScene.gameScore += 1;
+		        			 }
+		        			 else
+		        			 {
+		        				 // pas du bon type
+		        				 this.deSelectMe();
+		        				 GameScene.selectedPiece.deSelectMe();
+		        			 }
+		        		 }
+		        		 // Pas de piece deja selectionnée
+		        		 else
+		        		 {
+		        			 selectMe();
+		        		 }
+		        		
 		             }
 		        	 else
 		        	 {
-		        		 isSelected = false;
-		        		 this.setScale(1.00f);
-		        		 GameScene.selectedPiece = null;
+		        		 
+		        		 this.deSelectMe();
+		        		// theoriquement GameScene.selectedPiece == this mais on sait jamais
+		        		 if (GameScene.selectedPiece != null)
+		        		 {
+		        			 GameScene.selectedPiece.deSelectMe();
+		        			 GameScene.selectedPiece = null;
+		        		 }
 		        	 }
 	        	 }
 	             break;

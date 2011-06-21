@@ -69,6 +69,7 @@ public class Catjong extends BaseGameActivity {
 		
 	}
 
+	@Override
 	public void onLoadComplete() {
 		// TODO Auto-generated method stub
 		
