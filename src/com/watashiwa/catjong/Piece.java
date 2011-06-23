@@ -16,6 +16,9 @@ public class Piece extends AnimatedSprite {
 	private float destX = 0;
 	private float destY = 0;
 	
+	private boolean isInFinalXPos = false;
+	private boolean isInFinalYPos = false;
+	
 	private boolean isSelected = false;
 	public boolean isAlive = true;
 	
@@ -41,8 +44,8 @@ public class Piece extends AnimatedSprite {
 			destX = j*this.mWidth + Constants.MARGE_LEFT;
 			destY = i*(this.mHeight - Constants.PIECE_UP) - m*Constants.PIECE_UP + Constants.MARGE_UP;
 			
-			this.mX = 0;
-			this.mY = 0;
+			this.mX = Constants.CAMERA_WIDTH/2;
+			this.mY = Constants.CAMERA_HEIGHT + 50;
 			
 			// todo faire une fonction d'affichage du bas vers le haut
 			this.mX = destX;
@@ -50,6 +53,8 @@ public class Piece extends AnimatedSprite {
 			
 			this.mPhysicsHandler = new PhysicsHandler(this);
 			this.registerUpdateHandler(this.mPhysicsHandler);
+			//this.mPhysicsHandler.setVelocity(Constants.DEMO_VELOCITY, Constants.DEMO_VELOCITY);
+			
 	}
 	
 	
@@ -70,6 +75,46 @@ public class Piece extends AnimatedSprite {
     	this.setScale(1.25f);
 	}
 	
+	protected void onManagedUpdate(final float pSecondsElapsed)
+	{
+		/*if(isAlive)
+		{
+			if (this.mX != destX)
+			{
+				if(this.mX < destX)
+				{
+					this.mPhysicsHandler.setVelocityX(Constants.DEMO_VELOCITY);
+				}
+				else if(this.mX > destX)
+				{
+					this.mPhysicsHandler.setVelocityX(-Constants.DEMO_VELOCITY);
+				}
+				else
+				{
+					isInFinalXPos = true;
+				}
+			}
+	
+			if (this.mY != destY)
+			{
+				if(this.mY < destY)
+				{
+					this.mPhysicsHandler.setVelocityY(Constants.DEMO_VELOCITY);
+				}
+				else if(this.mY > destY)
+				{
+					this.mPhysicsHandler.setVelocityY(-Constants.DEMO_VELOCITY);
+				}
+				else
+				{
+					isInFinalYPos = true;
+				}
+			}
+		}*/
+		super.onManagedUpdate(pSecondsElapsed);
+	}
+	
+	
 	 public boolean onAreaTouched(final TouchEvent pSceneTouchEvent, final float pTouchAreaLocalX, final float pTouchAreaLocalY) 
 	 {
 		 switch(pSceneTouchEvent.getAction()) 
@@ -84,11 +129,8 @@ public class Piece extends AnimatedSprite {
 		        		 {
 		        			// verif que les piece sont du meme type
 		        			 if (GameScene.selectedPiece.type == this.type)
-		        			 {
-		        				 GameScene.removePiece(GameScene.selectedPiece);
-		        				 GameScene.removePiece(this);
-		        				 GameScene.selectedPiece = null;
-		        				 GameScene.gameScore += 1;
+		        			 {	 
+		        				 GameScene.removePieces(this, GameScene.selectedPiece);
 		        			 }
 		        			 else
 		        			 {

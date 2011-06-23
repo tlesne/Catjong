@@ -74,5 +74,6 @@ public class Catjong extends BaseGameActivity {
 		// TODO Auto-generated method stub
 		
 	}
+
 	
 } 
