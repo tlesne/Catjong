@@ -61,7 +61,7 @@ public class GameScene extends Scene {
     
     private int initBoard [][] = 
 	{
-    	{ 0, 0, 0, 2, 0, 0, 2},
+    		/*	{ 0, 0, 0, 2, 0, 0, 2},
 		{ 0, 0, 2, 2, 0, 2, 2},
 		{ 0, 2, 3, 3, 3, 3, 2},
 		{ 2, 2, 0, 2, 0, 2, 2},
@@ -71,8 +71,13 @@ public class GameScene extends Scene {
 		{ 0, 1, 0, 1, 0, 2, 2},
 		{ 3, 3, 3, 3, 2, 2, 2},
 		{ 2, 2, 2, 2, 2, 2, 2},
-		{ 0, 2, 2, 2, 2, 2, 2},
-   // 		{ 1, 0, 0, 0, 0, 0, 1}
+		{ 0, 2, 2, 2, 2, 2, 2},*/
+    		
+    		
+    		{ 1, 2, 2, 1},
+    		{ 1, 2, 2, 1},
+    		{ 1, 2, 2, 1},
+    		{ 1, 2, 2, 1},
 	};
     
     private static Piece mBoard [][][];
@@ -86,6 +91,8 @@ public class GameScene extends Scene {
     public static Piece pieceToRemove = null;
     
     public static int numberOfTiles = 0;
+    
+    private int numberOfType = 6;
     
     private List<Integer> typeTileList = null;
     
@@ -236,7 +243,8 @@ public class GameScene extends Scene {
 		for (int i = 0; i <  numberOfTiles/2 ; i++)
 		{
 			// todo prendre en compte le nombre de doublons max
-			type = randomGenerator.nextInt(6);
+			//type = randomGenerator.nextInt(6);
+			type = i % numberOfType;
 			typeTileList.add(type);
 			typeTileList.add(type);
 		}
@@ -302,8 +310,8 @@ public class GameScene extends Scene {
         this.getChild(LAYER_SCORE).attachChild(rectTimeBar);
         
         
-        // fait baisser la jauge de temps toute les 0.5 seconde
-        this.registerUpdateHandler(new TimerHandler(0.5f, true, new ITimerCallback()
+        // fait baisser la jauge de temps toute les 0.1 seconde
+        this.registerUpdateHandler(new TimerHandler(0.1f, true, new ITimerCallback()
         {
 			@Override
 			public void onTimePassed(final TimerHandler pTimerHandler)
@@ -354,7 +362,21 @@ public class GameScene extends Scene {
 	 	 removePiece(pPiece2);
 		 selectedPiece = null;
 		 
-		 gameScore += 1 * timeBar;
+		 //calcul du score
+		 if (timeBar >= 50)
+		 {
+			 gameScore += 10;
+		 }
+		 else if (timeBar > 0)
+		 {
+			 gameScore += 5;
+		 }
+		 else
+		 {
+			 gameScore += 1;
+		 }
+		 
+		// gameScore += 1 * timeBar;
 		 timeBar = Constants.INIT_TIME_BAR;
 		 
 		 numberOfTiles -= 2;

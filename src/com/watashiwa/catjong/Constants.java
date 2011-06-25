@@ -18,7 +18,7 @@ public class Constants {
 	 public static final int MARGE_UP = 90;
 	 public static final int PIECE_UP = 10;
 	 
-	 public static final int INIT_TIME_BAR = 50;
-	 public static final int INIT_TIME_BAR_SIZE = 4;
+	 public static final int INIT_TIME_BAR = 100;
+	 public static final int INIT_TIME_BAR_SIZE = 2;
 }
 
