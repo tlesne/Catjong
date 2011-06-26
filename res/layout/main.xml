@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
@@ -9,4 +9,26 @@
     android:layout_height="wrap_content" 
     android:text="@string/hello"
     />
-</LinearLayout>
+		<Button
+		android:layout_width="wrap_content" 
+		android:layout_height="wrap_content" 
+		android:id="@+id/new_game" 
+		android:layout_centerVertical="true"
+		android:layout_centerHorizontal="true"
+		android:text="Play"/>
+		
+	  <Button android:id="@+id/options"
+	    	android:text="Options"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_below="@+id/new_game"
+			android:layout_centerHorizontal="true"
+			/>
+		<Button android:id="@+id/scores"
+	    	android:text="Scores"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_below="@+id/options"
+			android:layout_centerHorizontal="true"
+			/>
+</RelativeLayout>

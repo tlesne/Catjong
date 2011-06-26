@@ -6,10 +6,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Random;
 
 import javax.microedition.khronos.opengles.GL10;
-
 
 
 import org.anddev.andengine.engine.Engine;
@@ -30,9 +28,10 @@ import org.anddev.andengine.opengl.texture.region.TiledTextureRegion;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.view.View;
 
 
-public class GameScene extends Scene {
+public class GameScene extends Scene  {
 
 
 	
@@ -210,9 +209,8 @@ public class GameScene extends Scene {
 	{
 		//int m = 0;
 		Piece piece1 = null;
-		Random randomGenerator = new Random();
 		
-		int type, iMax, jMax, mMax = 0;
+		int type,  mMax = 0;
 		 
 		// init du board
 		mBoard = new Piece [Constants.NUMBER_PIECE_Z_MAX][Constants.NUMBER_PIECE_Y_MAX][Constants.NUMBER_PIECE_X_MAX];
@@ -286,9 +284,8 @@ public class GameScene extends Scene {
 		this.registerTouchArea(p_piece);
 	}
 	
-	// Init des données de Jeux
-	private void init ()
-	{	
+	private void init()
+	{
 		// Creation du BG
 		final Sprite myBackground = new Sprite(0, 0, 480, 800, bgImage);
 		this.getChild(LAYER_BACKGROUND).attachChild(myBackground);
@@ -300,16 +297,21 @@ public class GameScene extends Scene {
         //this.mScoreText.setAlpha(0.5f);
         this.mScoreText.setColor(1.0f, 1.0f, 1.0f);
         this.getChild(LAYER_SCORE).attachChild(mScoreText);
-  
-   
-        
-        
+		
         // La bar de temps
         rectTimeBar = new Rectangle(20, 30, 2*timeBar, 20);
         rectTimeBar.setColor(1.0f, 0.5f, 0.0f);
         this.getChild(LAYER_SCORE).attachChild(rectTimeBar);
-        
-        
+		
+		initGameSession ();
+	
+	}
+	
+	// Init des données de Jeux
+	private void initGameSession ()
+	{	
+
+  
         // fait baisser la jauge de temps toute les 0.1 seconde
         this.registerUpdateHandler(new TimerHandler(0.1f, true, new ITimerCallback()
         {
@@ -328,16 +330,24 @@ public class GameScene extends Scene {
         
         // initialisation du board
         buildBoard();
+        gameWin = false;
+        
 	}
 	
 
 	
 
-	 public boolean onSceneTouchEvent(final TouchEvent pSceneTouchEvent)
+	 public boolean onSceneTouchEvent(final TouchEvent pSceneTouchEvent, final ITouchArea pTouchArea, final float pTouchAreaLocalX, final float pTouchAreaLocalY)
 	 {
 		boolean ret = super.onSceneTouchEvent(pSceneTouchEvent);
 		
 		this.mScoreText.setText("Score: " + this.gameScore);
+		
+	
+			if (pTouchArea.equals(winSprite))
+			{
+				initGameSession ();
+			}
 		
 		 
 		return ret;
@@ -403,6 +413,9 @@ public class GameScene extends Scene {
 	     winSprite = new Sprite(0, 0, winMessage);
 	     winSprite.setPosition(Constants.CAMERA_WIDTH/2 - winSprite.getWidth()/2, Constants.CAMERA_HEIGHT/2 - winSprite.getWidth()/2);
 	    	
+	     this.registerTouchArea(winSprite);
+	     
+	     
 		this.getChild(LAYER_SCORE).attachChild(winSprite);
 	        
 	 }
