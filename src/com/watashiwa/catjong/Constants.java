@@ -20,5 +20,7 @@ public class Constants {
 	 
 	 public static final int INIT_TIME_BAR = 100;
 	 public static final int INIT_TIME_BAR_SIZE = 2;
+	 
+	 public static int initBoard [][];
 }
 

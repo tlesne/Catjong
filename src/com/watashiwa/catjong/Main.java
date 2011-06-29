@@ -38,7 +38,7 @@ public class Main extends Activity {
 	
 	 public void launchGameSession()
 	 {
-		 this.startActivity(new Intent(this, Catjong.class));
+		 this.startActivity(new Intent(this, SelectBoard.class));
 		
 	    	//this.finish();
 	 }

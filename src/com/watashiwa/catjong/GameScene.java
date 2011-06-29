@@ -27,7 +27,9 @@ import org.anddev.andengine.opengl.texture.region.TextureRegionFactory;
 import org.anddev.andengine.opengl.texture.region.TiledTextureRegion;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.view.View;
 
 
@@ -44,23 +46,19 @@ public class GameScene extends Scene  {
 	private TextureRegion winMessage;
     private Font mFont;
 	
-  /*  private int initBoard [][] = 
-    	{
-    		{ 0, 0, 2, 0, 0, 0, 0, 0, 2, 0, 0 }, 
-    		{ 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0 },
-    		{ 0, 0, 1, 2, 2, 2, 2, 2, 1, 0, 0 },
-    		{ 0, 1, 2, 0, 2, 3, 2, 0, 2, 1, 0 },
-    		{ 1, 2, 2, 3, 3, 3, 3, 3, 2, 2, 1 }, 
-    		{ 1, 0, 1, 2, 2, 2, 2, 2, 1, 0, 1 }, 
-    		{ 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1 }, 
-    		{ 0, 0, 0, 2, 3, 0, 3, 2, 0, 0, 0 }
-    	};
+    public int initBoardNumber; 
     
-    */
-    
-    private int initBoard [][] = 
+    private int initBoard1 [][] = 
 	{
-    		/*	{ 0, 0, 0, 2, 0, 0, 2},
+    		{ 1, 2, 2, 1},
+    		{ 1, 2, 2, 1},
+    		{ 1, 2, 2, 1},
+    		{ 1, 2, 2, 1},
+	};
+    
+    private int initBoard2 [][] =
+    {
+    	{ 0, 0, 0, 2, 0, 0, 2},
 		{ 0, 0, 2, 2, 0, 2, 2},
 		{ 0, 2, 3, 3, 3, 3, 2},
 		{ 2, 2, 0, 2, 0, 2, 2},
@@ -70,14 +68,25 @@ public class GameScene extends Scene  {
 		{ 0, 1, 0, 1, 0, 2, 2},
 		{ 3, 3, 3, 3, 2, 2, 2},
 		{ 2, 2, 2, 2, 2, 2, 2},
-		{ 0, 2, 2, 2, 2, 2, 2},*/
-    		
-    		
-    		{ 1, 2, 2, 1},
-    		{ 1, 2, 2, 1},
-    		{ 1, 2, 2, 1},
-    		{ 1, 2, 2, 1},
+		{ 0, 2, 2, 2, 2, 2, 2},
 	};
+    
+    private int initBoard3 [][] =
+    {
+    	{ 3, 3, 3, 3, 3, 3, 3},
+    	{ 3, 0, 0, 0, 0, 0, 3},
+    	{ 3, 0, 3, 3, 3, 0, 3},
+    	{ 3, 0, 3, 3, 3, 0, 3},
+    	{ 3, 0, 3, 3, 3, 0, 3},
+    	{ 3, 0, 3, 3, 3, 0, 3},
+    	{ 3, 0, 3, 3, 3, 0, 3},
+    	{ 3, 0, 3, 3, 3, 0, 3},
+    	{ 3, 0, 0, 0, 0, 0, 3},
+    	{ 3, 3, 3, 3, 3, 3, 3},
+
+	};
+    
+    int initBoards [][][] = {initBoard1, initBoard2, initBoard3};
     
     private static Piece mBoard [][][];
     
@@ -98,7 +107,7 @@ public class GameScene extends Scene  {
     // Score
     public static int gameScore = 0;
 	private ChangeableText mScoreText;
-	private static boolean gameWin = false;
+	public static boolean gameWin = false;
 
 	private Sprite winSprite = null; 
 	
@@ -114,9 +123,13 @@ public class GameScene extends Scene  {
 		
 	}
 
+
+	
 	
 	public GameScene(final int pLayerCount) {
 		super(pLayerCount);
+		//initBoardNumber = p_initBoardNumber;
+		
 	}
 	
 	// Chargement des ressources (Font, Sprites, etc.)
@@ -155,13 +168,9 @@ public class GameScene extends Scene  {
 		final Texture mWinTexture = new Texture(256, 128, TextureOptions.BILINEAR);
 		winMessage = TextureRegionFactory.createFromAsset(mWinTexture, context, "you_win.png", 0, 0);
 		 
-		
-		engine.getTextureManager().loadTextures(mBackgroundTexture, mWinTexture, texturePiece0, texturePiece1, texturePiece2, texturePiece3, texturePiece4, texturePiece5);
-			
 		// on ajoute toutes les textures
-	//	engine.getTextureManager().loadTextures(mBackgroundTexture /*, textureDroid0, textureDroid1, textureDroid2, textureDroid3 */);
+		engine.getTextureManager().loadTextures(mBackgroundTexture, mWinTexture, texturePiece0, texturePiece1, texturePiece2, texturePiece3, texturePiece4, texturePiece5);
 		
-      
 		init();
 	}
 
@@ -207,10 +216,15 @@ public class GameScene extends Scene  {
 	// Construit le tableau
 	private void buildBoard()
 	{
+		
+		int initBoard [][] = initBoards[initBoardNumber];
+		
+		
 		//int m = 0;
 		Piece piece1 = null;
 		
 		int type,  mMax = 0;
+		numberOfTiles = 0;
 		 
 		// init du board
 		mBoard = new Piece [Constants.NUMBER_PIECE_Z_MAX][Constants.NUMBER_PIECE_Y_MAX][Constants.NUMBER_PIECE_X_MAX];
@@ -292,7 +306,7 @@ public class GameScene extends Scene  {
 		
        
         /* Le score */
-        this.mScoreText = new ChangeableText(Constants.CAMERA_WIDTH/2 + 50, 15, mFont, "Score: 0", "Score: XXXX".length());
+        this.mScoreText = new ChangeableText(Constants.CAMERA_WIDTH/2 + 50, 15, mFont, "Score : 0", "Score: XXXX".length());
         this.mScoreText.setBlendFunction(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA);
         //this.mScoreText.setAlpha(0.5f);
         this.mScoreText.setColor(1.0f, 1.0f, 1.0f);
@@ -303,6 +317,44 @@ public class GameScene extends Scene  {
         rectTimeBar.setColor(1.0f, 0.5f, 0.0f);
         this.getChild(LAYER_SCORE).attachChild(rectTimeBar);
 		
+        // le message de win
+	     winSprite = new Sprite(-100, -100, winMessage) {
+				@Override
+				public boolean onAreaTouched(final TouchEvent pSceneTouchEvent, final float pTouchAreaLocalX, final float pTouchAreaLocalY) 
+				{
+					 switch(pSceneTouchEvent.getAction()) 
+					 {
+				         case TouchEvent.ACTION_DOWN:
+				        	 //initGameSession ();
+				        	 // Relaunch the Catjong activity
+				        	 reload(); 
+				        	 
+				             break;
+				        	 
+					 }
+					 
+					 return true;
+				}
+			};
+			
+			  this.registerTouchArea(winSprite);
+			  this.getChild(LAYER_SCORE).attachChild(winSprite);
+        
+			  // fait baisser la jauge de temps toute les 0.1 seconde
+		        this.registerUpdateHandler(new TimerHandler(0.1f, true, new ITimerCallback()
+		        {
+					@Override
+					public void onTimePassed(final TimerHandler pTimerHandler)
+					{
+						if(timeBar > 0 && !gameWin)
+						{
+							timeBar --;
+							 // maj de la taille de la bar
+							 rectTimeBar.setWidth(Constants.INIT_TIME_BAR_SIZE*timeBar);
+						}
+					}
+				}));
+			  
 		initGameSession ();
 	
 	}
@@ -312,25 +364,15 @@ public class GameScene extends Scene  {
 	{	
 
   
-        // fait baisser la jauge de temps toute les 0.1 seconde
-        this.registerUpdateHandler(new TimerHandler(0.1f, true, new ITimerCallback()
-        {
-			@Override
-			public void onTimePassed(final TimerHandler pTimerHandler)
-			{
-				if(timeBar > 0)
-				{
-					timeBar --;
-					 // maj de la taille de la bar
-					 rectTimeBar.setWidth(Constants.INIT_TIME_BAR_SIZE*timeBar);
-				}
-			}
-		}));
+       
+        
         
         
         // initialisation du board
         buildBoard();
+        timeBar = Constants.INIT_TIME_BAR;
         gameWin = false;
+        gameScore = 0;
         
 	}
 	
@@ -341,15 +383,8 @@ public class GameScene extends Scene  {
 	 {
 		boolean ret = super.onSceneTouchEvent(pSceneTouchEvent);
 		
-		this.mScoreText.setText("Score: " + this.gameScore);
+		//this.mScoreText.setText("Score: " + gameScore);
 		
-	
-			if (pTouchArea.equals(winSprite))
-			{
-				initGameSession ();
-			}
-		
-		 
 		return ret;
      }
 
@@ -403,20 +438,26 @@ public class GameScene extends Scene  {
 		{
 			winPhase();
 		}
-		 
+		this.mScoreText.setText("Score: " + gameScore);
 		super.onManagedUpdate(pSecondsElapsed);
 	}
 	 
 	 private void winPhase ()
 	 {
-		 // le message de win
-	     winSprite = new Sprite(0, 0, winMessage);
+		
 	     winSprite.setPosition(Constants.CAMERA_WIDTH/2 - winSprite.getWidth()/2, Constants.CAMERA_HEIGHT/2 - winSprite.getWidth()/2);
 	    	
-	     this.registerTouchArea(winSprite);
-	     
-	     
-		this.getChild(LAYER_SCORE).attachChild(winSprite);
+	  
 	        
 	 }
+	 
+	 
+	   public void reload() 
+	   {
+		   initGameSession ();
+		   winSprite.setPosition(-100, -100);
+		    
+			
+		  
+		}
 }
