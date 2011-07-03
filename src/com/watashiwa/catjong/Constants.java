@@ -10,7 +10,7 @@ public class Constants {
 	 
 	 public static final int LAYER_COUNT = GameScene.LAYER_SCORE + 1;
 	 
-	 public static final int NUMBER_PIECE_Z_MAX = 5;
+	 public static final int NUMBER_PIECE_Z_MAX = 11;
 	 public static final int NUMBER_PIECE_Y_MAX = 11;
 	 public static final int NUMBER_PIECE_X_MAX = 11;
 	 

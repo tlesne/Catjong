@@ -25,7 +25,7 @@ public class Catjong extends BaseGameActivity {
 	
     private GameScene scene;
     
-   
+    
     
     public void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
@@ -33,10 +33,12 @@ public class Catjong extends BaseGameActivity {
     	// recupere les parametre de l'activity précedentes
     	Intent i = getIntent();
     	int initBoardNumber = i.getIntExtra("initboard", 0);
+    	int initTypesNumber = i.getIntExtra("numberOfTypes", 0);
     	
     	if (scene != null)
     	{
     		scene.initBoardNumber = initBoardNumber;
+    		scene.numberOfType = initTypesNumber;
     	}
 	}
     
@@ -87,17 +89,23 @@ public class Catjong extends BaseGameActivity {
 		
 	}
 
-	public boolean onSceneTouchEvent(final Scene pScene, final TouchEvent pSceneTouchEvent) {
-		/* Removing entities can only be done safely on the UpdateThread.
-		 * Doing it while updating/drawing can
-		 * cause an exception with a suddenly missing entity.
-		 * Alternatively, there is a possibility to run the TouchEvents on the UpdateThread by default, by doing:
-		 * engineOptions.getTouchOptions().setRunOnUpdateThread(true);
-		 * when creating the Engine in onLoadEngine(); */
+	
+	public void runOnUpdateThread(Runnable run)
+	{
+			if (GameScene.selectedPiece != null)
+			{
+				scene.detachChild(GameScene.selectedPiece);
+			}
+			
+		
+	}
+	
+	/*public boolean onSceneTouchEvent(final Scene pScene, final TouchEvent pSceneTouchEvent) {
+	
 		this.runOnUpdateThread(new Runnable() {
 			@Override
 			public void run() {
-				/* Now it is save to remove the entity! */
+			
 				if (GameScene.selectedPiece != null)
 				{
 					scene.detachChild(GameScene.selectedPiece);
@@ -106,6 +114,8 @@ public class Catjong extends BaseGameActivity {
 			}
 		});
 		
+		scene.mScoreText.setText("dans catjong ");
+		
 		if (scene.gameWin)
 		{
 			reload();
@@ -113,7 +123,7 @@ public class Catjong extends BaseGameActivity {
 		
 		return false;
 	}
-	
+	*/
 	
 	@Override
 	public void onLoadComplete() {

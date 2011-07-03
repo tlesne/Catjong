@@ -131,6 +131,8 @@ public class Piece extends AnimatedSprite {
 		        			 if (GameScene.selectedPiece.type == this.type)
 		        			 {	 
 		        				 GameScene.removePieces(this, GameScene.selectedPiece);
+		        				 
+		        				 
 		        			 }
 		        			 else
 		        			 {

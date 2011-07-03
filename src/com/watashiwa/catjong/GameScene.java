@@ -37,7 +37,7 @@ public class GameScene extends Scene  {
 
 
 	
-	private TiledTextureRegion regionPieces[] = {null, null, null, null, null, null};
+	private TiledTextureRegion regionPieces[] = {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null};
 	
 	private Texture mFontTexture;
 	
@@ -68,25 +68,105 @@ public class GameScene extends Scene  {
 		{ 0, 1, 0, 1, 0, 2, 2},
 		{ 3, 3, 3, 3, 2, 2, 2},
 		{ 2, 2, 2, 2, 2, 2, 2},
-		{ 0, 2, 2, 2, 2, 2, 2},
 	};
     
     private int initBoard3 [][] =
     {
     	{ 3, 3, 3, 3, 3, 3, 3},
     	{ 3, 0, 0, 0, 0, 0, 3},
-    	{ 3, 0, 3, 3, 3, 0, 3},
-    	{ 3, 0, 3, 3, 3, 0, 3},
-    	{ 3, 0, 3, 3, 3, 0, 3},
-    	{ 3, 0, 3, 3, 3, 0, 3},
-    	{ 3, 0, 3, 3, 3, 0, 3},
-    	{ 3, 0, 3, 3, 3, 0, 3},
+    	{ 3, 0, 3, 2, 1, 0, 3},
+    	{ 3, 0, 3, 2, 1, 0, 3},
+    	{ 3, 0, 3, 2, 1, 0, 3},
+    	{ 3, 0, 3, 2, 1, 0, 3},
+    	{ 3, 0, 3, 2, 1, 0, 3},
     	{ 3, 0, 0, 0, 0, 0, 3},
     	{ 3, 3, 3, 3, 3, 3, 3},
 
 	};
     
-    int initBoards [][][] = {initBoard1, initBoard2, initBoard3};
+    private int initBoard4 [][] =
+    {
+    	{ 3, 0, 3, 3, 3, 0, 3},
+    	{ 3, 0, 3, 0, 3, 0, 3},
+    	{ 3, 0, 3, 0, 3, 0, 3},
+    	{ 3, 0, 3, 0, 3, 0, 3},
+    	{ 3, 0, 3, 0, 3, 0, 3},
+    	{ 3, 0, 3, 0, 3, 0, 3},
+    	{ 3, 0, 3, 0, 3, 0, 3},
+    	{ 3, 0, 3, 0, 3, 0, 3},
+    	{ 3, 3, 3, 3, 3, 3, 3},
+
+	};
+    
+    private int initBoard5 [][] =
+    {
+    	{ 0, 2, 0, 0, 0, 2, 0},
+    	{ 0, 0, 2, 0, 2, 0, 0},
+    	{ 0, 2, 2, 2, 2, 2, 0},
+    	{ 2, 2, 2, 2, 2, 2, 2},
+    	{ 2, 2, 0, 2, 0, 2, 2},
+    	{ 2, 2, 2, 2, 2, 2, 2},
+    	{ 2, 0, 2, 2, 2, 0, 2},
+    	{ 2, 0, 2, 0, 2, 0, 2},
+    	{ 0, 0, 0, 2, 0, 0, 0},
+	};
+    
+    private int initBoard6 [][] =
+    {
+    	{ 0, 0, 2, 2, 2, 0, 0},
+    	{ 0, 2, 2, 2, 2, 2, 0},
+    	{ 2, 2, 2, 2, 2, 2, 2},
+    	{ 2, 2, 2, 2, 2, 0, 0},
+    	{ 2, 2, 2, 0, 0, 0, 0},
+    	{ 2, 2, 2, 2, 2, 0, 0},
+    	{ 2, 2, 2, 2, 2, 2, 2},
+    	{ 0, 2, 2, 2, 2, 2, 0},
+    	{ 0, 0, 2, 2, 2, 0, 0},
+	};
+    
+    
+    private int initBoard7 [][] =
+    {
+    	{ 0, 0, 1, 1, 1, 0, 0},
+    	{ 0, 1, 2, 2, 2, 1, 0},
+    	{ 1, 2, 2, 2, 2, 2, 1},
+    	{ 1, 2, 2, 2, 2, 2, 1},
+    	{ 1, 2, 2, 2, 2, 2, 1},
+    	{ 1, 2, 0, 2, 0, 2, 1},
+    	{ 0, 1, 2, 2, 2, 1, 0},
+    	{ 0, 0, 2, 1, 2, 0, 0},
+    	{ 0, 0, 1, 0, 1, 0, 0},
+	};
+    
+    private int initBoard8 [][] =
+    {
+    	{ 1, 2, 3, 2, 1},
+    	{ 0, 0, 3, 0, 0},
+    	{ 3, 4, 4, 4, 3},
+    	{ 3, 4, 6, 4, 3},
+    	{ 3, 4, 4, 4, 3},
+    	{ 0, 0, 3, 0, 0},
+    	{ 1, 2, 3, 2, 1},
+    
+	};
+    
+    private int initBoard9 [][] =
+    {
+    		{ 1, 0, 1, 0, 1, 0, 1},
+    		{ 0, 1, 0, 1, 0, 1, 0},
+    		{ 1, 0, 1, 0, 1, 0, 1},
+    		{ 0, 1, 0, 1, 0, 1, 0},
+    		{ 1, 0, 1, 0, 1, 0, 1},
+    		{ 0, 1, 0, 1, 0, 1, 0},
+    		{ 1, 0, 1, 0, 1, 0, 1},
+    		{ 0, 1, 0, 1, 0, 1, 0},
+    		{ 1, 0, 1, 0, 1, 0, 1},
+        	
+	};
+    
+    
+    
+    int initBoards [][][] = {initBoard1, initBoard2, initBoard3, initBoard4, initBoard5, initBoard6, initBoard7, initBoard8, initBoard9};
     
     private static Piece mBoard [][][];
     
@@ -100,13 +180,13 @@ public class GameScene extends Scene  {
     
     public static int numberOfTiles = 0;
     
-    private int numberOfType = 6;
+    public int numberOfType = 30;
     
     private List<Integer> typeTileList = null;
     
     // Score
     public static int gameScore = 0;
-	private ChangeableText mScoreText;
+	public ChangeableText mScoreText;
 	public static boolean gameWin = false;
 
 	private Sprite winSprite = null; 
@@ -132,6 +212,8 @@ public class GameScene extends Scene  {
 		
 	}
 	
+	
+	
 	// Chargement des ressources (Font, Sprites, etc.)
 	public void loadResources(final Engine engine, Context context) {
 		
@@ -143,23 +225,24 @@ public class GameScene extends Scene  {
         engine.getTextureManager().loadTexture(mFontTexture);
         engine.getFontManager().loadFont(mFont);
 		
-        final Texture texturePiece0 = new Texture(64, 128, TextureOptions.BILINEAR);
-        regionPieces[0] = TextureRegionFactory.createTiledFromAsset(texturePiece0, context, "piece0.png", 0, 0, 1, 1);
+        String namePiece = "";
         
-        final Texture texturePiece1 = new Texture(64, 128, TextureOptions.BILINEAR);
-        regionPieces[1] = TextureRegionFactory.createTiledFromAsset(texturePiece1, context, "piece1.png", 0, 0, 1, 1);
-        
-        final Texture texturePiece2 = new Texture(64, 128, TextureOptions.BILINEAR);
-        regionPieces[2] = TextureRegionFactory.createTiledFromAsset(texturePiece2, context, "piece2.png", 0, 0, 1, 1);
-        
-        final Texture texturePiece3 = new Texture(64, 128, TextureOptions.BILINEAR);
-        regionPieces[3] = TextureRegionFactory.createTiledFromAsset(texturePiece3, context, "piece3.png", 0, 0, 1, 1);
-        
-        final Texture texturePiece4 = new Texture(64, 128, TextureOptions.BILINEAR);
-        regionPieces[4] = TextureRegionFactory.createTiledFromAsset(texturePiece4, context, "piece4.png", 0, 0, 1, 1);
-        
-        final Texture texturePiece5 = new Texture(64, 128, TextureOptions.BILINEAR);
-        regionPieces[5] = TextureRegionFactory.createTiledFromAsset(texturePiece5, context, "piece5.png", 0, 0, 1, 1);
+        // Load toute les textures.
+        for (int i = 0; i < this.numberOfType && i < regionPieces.length; i++)
+        {
+        	if (i < 10)
+        	{
+        		namePiece = "0" + i + ".png";
+        	}
+        	else
+        	{
+        		namePiece = i + ".png";
+        	}
+        		
+        	final Texture texturePiece0 = new Texture(64, 128, TextureOptions.BILINEAR);
+            regionPieces[i] = TextureRegionFactory.createTiledFromAsset(texturePiece0, context, namePiece, 0, 0, 1, 1);
+            engine.getTextureManager().loadTexture(texturePiece0);
+        }
         
 		// BG
 		final Texture mBackgroundTexture = new Texture(512, 1024, TextureOptions.BILINEAR);
@@ -169,7 +252,7 @@ public class GameScene extends Scene  {
 		winMessage = TextureRegionFactory.createFromAsset(mWinTexture, context, "you_win.png", 0, 0);
 		 
 		// on ajoute toutes les textures
-		engine.getTextureManager().loadTextures(mBackgroundTexture, mWinTexture, texturePiece0, texturePiece1, texturePiece2, texturePiece3, texturePiece4, texturePiece5);
+		engine.getTextureManager().loadTextures(mBackgroundTexture, mWinTexture);
 		
 		init();
 	}
@@ -330,9 +413,7 @@ public class GameScene extends Scene  {
 				        	 reload(); 
 				        	 
 				             break;
-				        	 
 					 }
-					 
 					 return true;
 				}
 			};
@@ -362,12 +443,6 @@ public class GameScene extends Scene  {
 	// Init des données de Jeux
 	private void initGameSession ()
 	{	
-
-  
-       
-        
-        
-        
         // initialisation du board
         buildBoard();
         timeBar = Constants.INIT_TIME_BAR;
@@ -384,6 +459,9 @@ public class GameScene extends Scene  {
 		boolean ret = super.onSceneTouchEvent(pSceneTouchEvent);
 		
 		//this.mScoreText.setText("Score: " + gameScore);
+		
+		
+		
 		
 		return ret;
      }
@@ -443,12 +521,8 @@ public class GameScene extends Scene  {
 	}
 	 
 	 private void winPhase ()
-	 {
-		
+	 {	
 	     winSprite.setPosition(Constants.CAMERA_WIDTH/2 - winSprite.getWidth()/2, Constants.CAMERA_HEIGHT/2 - winSprite.getWidth()/2);
-	    	
-	  
-	        
 	 }
 	 
 	 
@@ -456,8 +530,5 @@ public class GameScene extends Scene  {
 	   {
 		   initGameSession ();
 		   winSprite.setPosition(-100, -100);
-		    
-			
-		  
 		}
 }
