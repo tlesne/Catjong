@@ -1,6 +1,8 @@
 package com.watashiwa.catjong;
 
 import org.anddev.andengine.engine.handler.physics.PhysicsHandler;
+import org.anddev.andengine.entity.primitive.Rectangle;
+import org.anddev.andengine.entity.scene.Scene;
 import org.anddev.andengine.entity.sprite.AnimatedSprite;
 import org.anddev.andengine.input.touch.TouchEvent;
 import org.anddev.andengine.opengl.texture.region.TiledTextureRegion;
@@ -22,7 +24,9 @@ public class Piece extends AnimatedSprite {
 	private boolean isSelected = false;
 	public boolean isAlive = true;
 	
-	private int type = 0;
+	public Rectangle shadow = null;
+	
+	public int type = 0;
 	
 	public Piece(float pX, float pY, TiledTextureRegion pTiledTextureRegion)
 	{
@@ -32,7 +36,7 @@ public class Piece extends AnimatedSprite {
 			this.registerUpdateHandler(this.mPhysicsHandler);
 	}
 	
-	public Piece(TiledTextureRegion pTiledTextureRegion, int pi, int pj, int pm, int ptype)
+	public Piece(TiledTextureRegion pTiledTextureRegion, int pi, int pj, int pm, int ptype, GameScene gameScene)
 	{
 			super( 0, 0 , pTiledTextureRegion);
 			
@@ -50,6 +54,16 @@ public class Piece extends AnimatedSprite {
 			// todo faire une fonction d'affichage du bas vers le haut
 			this.mX = destX;
 			this.mY = destY;
+			
+			//if (gameScene.mustDisplayShadow(this))
+			if (this.m > 0)
+			{
+				shadow = new Rectangle(destX, destY + this.mHeight, this.mWidth, this.mHeight/8);
+				shadow.setColor(0.0f,0.0f, 0.0f);
+				shadow.setAlpha(0.40f);
+				gameScene.getChild(GameScene.LAYER_PIECES + pm).attachChild(shadow);
+			}
+			
 			
 			this.mPhysicsHandler = new PhysicsHandler(this);
 			this.registerUpdateHandler(this.mPhysicsHandler);
@@ -137,8 +151,14 @@ public class Piece extends AnimatedSprite {
 		        			 else
 		        			 {
 		        				 // pas du bon type
-		        				 this.deSelectMe();
+		        				// this.deSelectMe();
+		        				 // GameScene.selectedPiece.deSelectMe();
+		        				 
+		        				 // deselectionne l'autre piece
 		        				 GameScene.selectedPiece.deSelectMe();
+				        		GameScene.selectedPiece = null;
+				        		// et selectionne moi
+				        		 selectMe();
 		        			 }
 		        		 }
 		        		 // Pas de piece deja selectionnée

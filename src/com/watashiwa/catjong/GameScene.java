@@ -30,6 +30,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 
@@ -44,135 +45,17 @@ public class GameScene extends Scene  {
 	private TextureRegion bgImage;
 	
 	private TextureRegion winMessage;
+	private TextureRegion gameoverMessage;
+	
     private Font mFont;
 	
     public int initBoardNumber; 
-    
-    private int initBoard1 [][] = 
-	{
-    		{ 1, 2, 2, 1},
-    		{ 1, 2, 2, 1},
-    		{ 1, 2, 2, 1},
-    		{ 1, 2, 2, 1},
-	};
-    
-    private int initBoard2 [][] =
-    {
-    	{ 0, 0, 0, 2, 0, 0, 2},
-		{ 0, 0, 2, 2, 0, 2, 2},
-		{ 0, 2, 3, 3, 3, 3, 2},
-		{ 2, 2, 0, 2, 0, 2, 2},
-		{ 3, 3, 3, 3, 3, 3, 2},
-		{ 0, 1, 0, 1, 0, 0, 2},
-		{ 0, 0, 0, 0, 0, 0, 2},
-		{ 0, 1, 0, 1, 0, 2, 2},
-		{ 3, 3, 3, 3, 2, 2, 2},
-		{ 2, 2, 2, 2, 2, 2, 2},
-	};
-    
-    private int initBoard3 [][] =
-    {
-    	{ 3, 3, 3, 3, 3, 3, 3},
-    	{ 3, 0, 0, 0, 0, 0, 3},
-    	{ 3, 0, 3, 2, 1, 0, 3},
-    	{ 3, 0, 3, 2, 1, 0, 3},
-    	{ 3, 0, 3, 2, 1, 0, 3},
-    	{ 3, 0, 3, 2, 1, 0, 3},
-    	{ 3, 0, 3, 2, 1, 0, 3},
-    	{ 3, 0, 0, 0, 0, 0, 3},
-    	{ 3, 3, 3, 3, 3, 3, 3},
-
-	};
-    
-    private int initBoard4 [][] =
-    {
-    	{ 3, 0, 3, 3, 3, 0, 3},
-    	{ 3, 0, 3, 0, 3, 0, 3},
-    	{ 3, 0, 3, 0, 3, 0, 3},
-    	{ 3, 0, 3, 0, 3, 0, 3},
-    	{ 3, 0, 3, 0, 3, 0, 3},
-    	{ 3, 0, 3, 0, 3, 0, 3},
-    	{ 3, 0, 3, 0, 3, 0, 3},
-    	{ 3, 0, 3, 0, 3, 0, 3},
-    	{ 3, 3, 3, 3, 3, 3, 3},
-
-	};
-    
-    private int initBoard5 [][] =
-    {
-    	{ 0, 2, 0, 0, 0, 2, 0},
-    	{ 0, 0, 2, 0, 2, 0, 0},
-    	{ 0, 2, 2, 2, 2, 2, 0},
-    	{ 2, 2, 2, 2, 2, 2, 2},
-    	{ 2, 2, 0, 2, 0, 2, 2},
-    	{ 2, 2, 2, 2, 2, 2, 2},
-    	{ 2, 0, 2, 2, 2, 0, 2},
-    	{ 2, 0, 2, 0, 2, 0, 2},
-    	{ 0, 0, 0, 2, 0, 0, 0},
-	};
-    
-    private int initBoard6 [][] =
-    {
-    	{ 0, 0, 2, 2, 2, 0, 0},
-    	{ 0, 2, 2, 2, 2, 2, 0},
-    	{ 2, 2, 2, 2, 2, 2, 2},
-    	{ 2, 2, 2, 2, 2, 0, 0},
-    	{ 2, 2, 2, 0, 0, 0, 0},
-    	{ 2, 2, 2, 2, 2, 0, 0},
-    	{ 2, 2, 2, 2, 2, 2, 2},
-    	{ 0, 2, 2, 2, 2, 2, 0},
-    	{ 0, 0, 2, 2, 2, 0, 0},
-	};
-    
-    
-    private int initBoard7 [][] =
-    {
-    	{ 0, 0, 1, 1, 1, 0, 0},
-    	{ 0, 1, 2, 2, 2, 1, 0},
-    	{ 1, 2, 2, 2, 2, 2, 1},
-    	{ 1, 2, 2, 2, 2, 2, 1},
-    	{ 1, 2, 2, 2, 2, 2, 1},
-    	{ 1, 2, 0, 2, 0, 2, 1},
-    	{ 0, 1, 2, 2, 2, 1, 0},
-    	{ 0, 0, 2, 1, 2, 0, 0},
-    	{ 0, 0, 1, 0, 1, 0, 0},
-	};
-    
-    private int initBoard8 [][] =
-    {
-    	{ 1, 2, 3, 2, 1},
-    	{ 0, 0, 3, 0, 0},
-    	{ 3, 4, 4, 4, 3},
-    	{ 3, 4, 6, 4, 3},
-    	{ 3, 4, 4, 4, 3},
-    	{ 0, 0, 3, 0, 0},
-    	{ 1, 2, 3, 2, 1},
-    
-	};
-    
-    private int initBoard9 [][] =
-    {
-    		{ 1, 0, 1, 0, 1, 0, 1},
-    		{ 0, 1, 0, 1, 0, 1, 0},
-    		{ 1, 0, 1, 0, 1, 0, 1},
-    		{ 0, 1, 0, 1, 0, 1, 0},
-    		{ 1, 0, 1, 0, 1, 0, 1},
-    		{ 0, 1, 0, 1, 0, 1, 0},
-    		{ 1, 0, 1, 0, 1, 0, 1},
-    		{ 0, 1, 0, 1, 0, 1, 0},
-    		{ 1, 0, 1, 0, 1, 0, 1},
-        	
-	};
-    
-    
-    
-    int initBoards [][][] = {initBoard1, initBoard2, initBoard3, initBoard4, initBoard5, initBoard6, initBoard7, initBoard8, initBoard9};
-    
+   
     private static Piece mBoard [][][];
     
     // Layer
 	private static final int LAYER_BACKGROUND = 0;
-    private static final int LAYER_PIECES = LAYER_BACKGROUND + 1;
+	public static final int LAYER_PIECES = LAYER_BACKGROUND + 1;
     public static final int LAYER_SCORE = LAYER_PIECES + 10;
 	
     public static Piece selectedPiece = null;
@@ -188,8 +71,12 @@ public class GameScene extends Scene  {
     public static int gameScore = 0;
 	public ChangeableText mScoreText;
 	public static boolean gameWin = false;
+	public static boolean gameover = false;
+	
 
 	private Sprite winSprite = null; 
+	private Sprite gameoverSprite = null; 
+	
 	
 	//Bar de temps
 	private static int timeBar = Constants.INIT_TIME_BAR;
@@ -204,14 +91,11 @@ public class GameScene extends Scene  {
 	}
 
 
-	
-	
 	public GameScene(final int pLayerCount) {
 		super(pLayerCount);
 		//initBoardNumber = p_initBoardNumber;
 		
 	}
-	
 	
 	
 	// Chargement des ressources (Font, Sprites, etc.)
@@ -246,19 +130,34 @@ public class GameScene extends Scene  {
         
 		// BG
 		final Texture mBackgroundTexture = new Texture(512, 1024, TextureOptions.BILINEAR);
-		bgImage = TextureRegionFactory.createFromAsset(mBackgroundTexture, context, "decors.png", 0, 0);
+		bgImage = TextureRegionFactory.createFromAsset(mBackgroundTexture, context, "BG01_480x800.jpg", 0, 0);
 	 
 		final Texture mWinTexture = new Texture(256, 128, TextureOptions.BILINEAR);
 		winMessage = TextureRegionFactory.createFromAsset(mWinTexture, context, "you_win.png", 0, 0);
 		 
+		final Texture gameoverTexture = new Texture(256, 64, TextureOptions.BILINEAR);
+		gameoverMessage = TextureRegionFactory.createFromAsset(mWinTexture, context, "game_over.png", 0, 0);
+		
 		// on ajoute toutes les textures
-		engine.getTextureManager().loadTextures(mBackgroundTexture, mWinTexture);
+		engine.getTextureManager().loadTextures(mBackgroundTexture, mWinTexture, gameoverTexture);
 		
 		init();
 	}
 
+	// on affiche l'ombre ?
+	public Boolean mustDisplayShadow (Piece p)
+	{
+		if (p.m - 1 > 0 && p.i + 1 < Constants.NUMBER_PIECE_Y_MAX && mBoard[p.m - 1][p.i + 1][p.j] != null)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
 	
-
+	// determine si on peut selectionner la piece
 	public static Boolean canSelectPiece(Piece p)
 	{
 		
@@ -274,10 +173,8 @@ public class GameScene extends Scene  {
 			if (mBoard[p.m][p.i][p.j - 1] == null || mBoard[p.m][p.i][p.j + 1] == null)
 			{
 				return true;
-			}
-				
+			}		
 		}
-		
 		return false;
 	}
 	
@@ -300,7 +197,7 @@ public class GameScene extends Scene  {
 	private void buildBoard()
 	{
 		
-		int initBoard [][] = initBoards[initBoardNumber];
+		int initBoard [][] =  Boards.initBoards[initBoardNumber];
 		
 		
 		//int m = 0;
@@ -357,7 +254,7 @@ public class GameScene extends Scene  {
 				{
 					type = itr.next();
 					
-					piece1 = new Piece (regionPieces[type], i, j, m, type);
+					piece1 = new Piece (regionPieces[type], i, j, m, type, this);
 					mBoard[m][i][j] = piece1;
 					
 					displayPiece(piece1);
@@ -418,16 +315,39 @@ public class GameScene extends Scene  {
 				}
 			};
 			
+			
 			  this.registerTouchArea(winSprite);
 			  this.getChild(LAYER_SCORE).attachChild(winSprite);
         
+			  // le message de win
+			     gameoverSprite = new Sprite(-100, -100,  gameoverMessage) {
+						@Override
+						public boolean onAreaTouched(final TouchEvent pSceneTouchEvent, final float pTouchAreaLocalX, final float pTouchAreaLocalY) 
+						{
+							 switch(pSceneTouchEvent.getAction()) 
+							 {
+						         case TouchEvent.ACTION_DOWN:
+						        	 //initGameSession ();
+						        	 // Relaunch the Catjong activity
+						        	 reload(); 
+						        	 
+						             break;
+							 }
+							 return true;
+						}
+					};
+			  
+					  this.registerTouchArea(gameoverSprite);
+					  this.getChild(LAYER_SCORE).attachChild(gameoverSprite);
+		        
+			  
 			  // fait baisser la jauge de temps toute les 0.1 seconde
 		        this.registerUpdateHandler(new TimerHandler(0.1f, true, new ITimerCallback()
 		        {
 					@Override
 					public void onTimePassed(final TimerHandler pTimerHandler)
 					{
-						if(timeBar > 0 && !gameWin)
+						if(timeBar > 0 && !gameWin && !gameover)
 						{
 							timeBar --;
 							 // maj de la taille de la bar
@@ -447,6 +367,7 @@ public class GameScene extends Scene  {
         buildBoard();
         timeBar = Constants.INIT_TIME_BAR;
         gameWin = false;
+        gameover = false;
         gameScore = 0;
         
 	}
@@ -474,6 +395,12 @@ public class GameScene extends Scene  {
 	     {	
 			 piece.isAlive = false;
 			 piece.setPosition(-100, -100);
+			 
+			 if (piece.shadow != null)
+		     {	
+				 piece.shadow.setPosition(-100, -100);
+		     }
+			 
 			 mBoard[piece.m][piece.i][piece.j] = null;
 			 
 		 }
@@ -508,7 +435,70 @@ public class GameScene extends Scene  {
 			 gameWin = true;
 			 
 		 }
+		 else if (gameIsOver())
+		 {
+			 gameover = true;
+		 }
 	 }
+	 
+	 // determine si on ne peut plus selectionner de piece
+	 private static boolean gameIsOver()
+	 {
+		Piece piece = null;
+		
+		List<Integer> typeList = new ArrayList<Integer>();
+		 
+		Log.d("dans le game over", "init");
+		
+		for(int m = 0; m < Constants.NUMBER_PIECE_Z_MAX; m++)
+		{
+				for(int i = 0; i < Constants.NUMBER_PIECE_Y_MAX; i++)
+				{
+					for(int j = 0; j < Constants.NUMBER_PIECE_X_MAX; j++)
+					{
+						if (mBoard[m][i][j] != null)
+						{
+							piece = mBoard[m][i][j];
+							Log.d("dans le game over", "hop");
+							if (piece.isAlive && canSelectPiece(piece))
+							{
+								// Est ce que la piece est dans la liste ?
+								if(isInSelectableList(piece.type, typeList))
+								{
+									return false;
+								}
+								// Ok donc on l'ajoute dans la liste
+								else
+								{
+									typeList.add(piece.type);
+								}
+							}
+						}
+						
+					}
+				}
+			}
+		 
+		// on a rien trouvé, le joueur ne peut plus rien faire
+		 return true;
+	 }
+	 
+	 private static boolean isInSelectableList(int type, List<Integer> typeList)
+	 { 
+		Iterator<Integer> itr = typeList.iterator();
+		
+		while (itr.hasNext())
+		{
+			if (type == itr.next())
+			{
+				 return true;
+			}
+		 }
+			 
+		 return false;
+	 }
+	 
+	
 	 
 	 protected void onManagedUpdate(final float pSecondsElapsed)
 	 { 
@@ -516,6 +506,11 @@ public class GameScene extends Scene  {
 		{
 			winPhase();
 		}
+		else if (gameover)
+		{
+			gameoverPhase();
+		}
+			
 		this.mScoreText.setText("Score: " + gameScore);
 		super.onManagedUpdate(pSecondsElapsed);
 	}
@@ -525,10 +520,16 @@ public class GameScene extends Scene  {
 	     winSprite.setPosition(Constants.CAMERA_WIDTH/2 - winSprite.getWidth()/2, Constants.CAMERA_HEIGHT/2 - winSprite.getWidth()/2);
 	 }
 	 
+	 private void gameoverPhase ()
+	 {	
+	     gameoverSprite.setPosition(Constants.CAMERA_WIDTH/2 - winSprite.getWidth()/2, Constants.CAMERA_HEIGHT/2 - winSprite.getWidth()/2);
+	 }
+	 
 	 
 	   public void reload() 
 	   {
 		   initGameSession ();
 		   winSprite.setPosition(-100, -100);
+		   gameoverSprite.setPosition(-100, -100);
 		}
 }

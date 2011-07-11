@@ -3,20 +3,27 @@
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="#0099ff"
+     android:background="@drawable/background_menu"
     >
-<TextView  
-    android:layout_width="fill_parent" 
-    android:layout_height="wrap_content" 
-    android:text="@string/hello"
-    />
+    
+    
+    <ImageView
+			android:id="@+id/title"
+					
+			 android:layout_width="wrap_content" 
+   			 android:layout_height="wrap_content" 
+			android:src="@drawable/title"
+			 />
+
 		<Button
 		android:layout_width="wrap_content" 
 		android:layout_height="wrap_content" 
 		android:id="@+id/new_game" 
 		android:layout_centerVertical="true"
 		android:layout_centerHorizontal="true"
-		android:text="Play"/>
+		android:text="Play"
+		android:background="@drawable/catbutton"
+		/>
 		
 	  <Button android:id="@+id/options"
 	    	android:text="Options"
@@ -24,6 +31,7 @@
 			android:layout_height="wrap_content"
 			android:layout_below="@+id/new_game"
 			android:layout_centerHorizontal="true"
+			android:background="@drawable/catbutton"
 			/>
 		<Button android:id="@+id/scores"
 	    	android:text="Scores"
@@ -31,5 +39,6 @@
 			android:layout_height="wrap_content"
 			android:layout_below="@+id/options"
 			android:layout_centerHorizontal="true"
+			android:background="@drawable/catbutton"
 			/>
 </RelativeLayout>

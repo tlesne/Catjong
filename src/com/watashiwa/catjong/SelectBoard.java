@@ -12,7 +12,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 public class SelectBoard extends Activity {
-
+	
 	Button button1;
 	Button button2;
 	Button button3;

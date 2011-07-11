@@ -23,7 +23,8 @@ public class Catjong extends BaseGameActivity {
 
 	private Camera camera;
 	
-    private GameScene scene;
+	// c'est porcasse mais je met Gamescene en static
+    private static GameScene scene;
     
     
     
@@ -100,8 +101,10 @@ public class Catjong extends BaseGameActivity {
 		
 	}
 	
-	/*public boolean onSceneTouchEvent(final Scene pScene, final TouchEvent pSceneTouchEvent) {
+	/*
+	public boolean onSceneTouchEvent(final Scene pScene, final TouchEvent pSceneTouchEvent) {
 	
+		
 		this.runOnUpdateThread(new Runnable() {
 			@Override
 			public void run() {
@@ -120,6 +123,8 @@ public class Catjong extends BaseGameActivity {
 		{
 			reload();
 		}
+		
+		
 		
 		return false;
 	}
